@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Choach — your chess coach</title>
+  <link rel="stylesheet" href="vendor/chessground.base.css">
+  <link rel="stylesheet" href="vendor/chessground.brown.css">
+  <link rel="stylesheet" href="vendor/chessground.cburnett.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand"><span class="logo">♞</span> Choach</div>
+    <form id="form" class="controls" autocomplete="off">
+      <label>Lichess username
+        <input id="username" type="text" placeholder="e.g. your-name" spellcheck="false" required>
+      </label>
+      <label>Games
+        <select id="count">
+          <option value="10">Last 10</option>
+          <option value="20" selected>Last 20</option>
+          <option value="30">Last 30</option>
+          <option value="50">Last 50</option>
+        </select>
+      </label>
+      <label>Time control
+        <select id="perf">
+          <option value="">All</option>
+          <option value="bullet">Bullet</option>
+          <option value="blitz">Blitz</option>
+          <option value="rapid">Rapid</option>
+          <option value="classical">Classical</option>
+        </select>
+      </label>
+      <label>Engine depth
+        <select id="depth">
+          <option value="12">Quick</option>
+          <option value="14" selected>Standard</option>
+          <option value="16">Deep (slower)</option>
+        </select>
+      </label>
+      <button id="go" type="submit" class="primary">Analyse my games</button>
+    </form>
+  </header>
+
+  <div id="progress" class="progress" hidden>
+    <div class="bar"><div id="bar-fill"></div></div>
+    <span id="progress-text"></span>
+  </div>
+  <div id="error" class="error" hidden></div>
+
+  <nav class="tabs" id="tabs" hidden>
+    <button data-tab="report" class="active">Coach report</button>
+    <button data-tab="review">Game review</button>
+  </nav>
+
+  <main>
+    <section id="welcome" class="welcome">
+      <h1>Find out <em>why</em> your mistakes are mistakes</h1>
+      <p>Enter your Lichess username above. Choach downloads your recent games, runs Stockfish over them in your browser, and then does two things Lichess's own analysis doesn't:</p>
+      <ul>
+        <li><b>Explains each mistake in words</b> — which piece was left hanging and why, what fork or pin you walked into, what you could have won instead — with the punishing line and the better line to step through on the board.</li>
+        <li><b>Looks for patterns across all your games</b> — the kinds of mistake you repeat, when they happen (rushed moves, time trouble, winning positions), and what to practise first.</li>
+      </ul>
+      <p class="muted">Everything runs on your computer. Only your public games are fetched from Lichess; nothing is uploaded anywhere.</p>
+    </section>
+
+    <section id="report" hidden></section>
+
+    <section id="review" hidden>
+      <aside id="game-list" class="game-list"></aside>
+      <div class="board-col">
+        <div class="player" id="player-top"></div>
+        <div id="board" class="board"></div>
+        <div class="player" id="player-bottom"></div>
+        <div class="nav">
+          <button id="nav-first" title="Start">⏮</button>
+          <button id="nav-prev" title="Previous (←)">◀</button>
+          <button id="nav-next" title="Next (→)">▶</button>
+          <button id="nav-last" title="End">⏭</button>
+          <button id="nav-prev-err" title="Previous mistake" class="wide">◀ mistake</button>
+          <button id="nav-next-err" title="Next mistake" class="wide">mistake ▶</button>
+        </div>
+        <div id="view-note" class="view-note"></div>
+        <div id="graph" class="graph"></div>
+      </div>
+      <div class="side-col">
+        <div id="card" class="card"></div>
+        <div id="moves" class="moves"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Engine: Stockfish 19 lite (stockfish.js, GPL-3). Board: Lichess chessground. Game data: Lichess API.
+    <button id="clear-cache" class="link">Clear saved analysis</button>
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
